@@ -19,7 +19,7 @@ import {
 export class ProductEditComponent implements OnInit {
   productForm: FormGroup;
 
-  _id: string = '';
+  id:number=null;
   prod_name: string = '';
   prod_desc: string = '';
   prod_price: number = null;
@@ -36,6 +36,7 @@ export class ProductEditComponent implements OnInit {
     this.getProduct(this.route.snapshot.params['id']);
 
     this.productForm = this.formBuilder.group({
+      
       'prod_name': [null, Validators.required],
       'prod_desc': [null, Validators.required],
       'prod_price': [null, Validators.required]
@@ -43,7 +44,7 @@ export class ProductEditComponent implements OnInit {
   }
   getProduct(id) {
     this.api.getProduct(id).subscribe(data => {
-      this._id = data._id;
+      this.id = data.id;
       this.productForm.setValue({
         prod_name: data.prod_name,
         prod_desc: data.prod_desc,
@@ -54,9 +55,9 @@ export class ProductEditComponent implements OnInit {
 
   onFormSubmit(form:NgForm) {
     this.isLoadingResults = true;
-    this.api.updateProduct(this._id, form)
+    this.api.updateProduct(this.id, form)
       .subscribe(res => {
-          let id = res['_id'];
+          let id = res['id'];
           this.isLoadingResults = false;
           this.router.navigate(['/product-details', id]);
         }, (err) => {
@@ -67,7 +68,7 @@ export class ProductEditComponent implements OnInit {
   }
 
   productDetails() {
-    this.router.navigate(['/product-details', this._id]);
+    this.router.navigate(['/product-details', this.id]);
   }
 
 }

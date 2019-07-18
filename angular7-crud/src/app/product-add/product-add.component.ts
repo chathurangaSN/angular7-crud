@@ -24,6 +24,7 @@ export class ProductAddComponent implements OnInit {
   prod_price: number = null;
   updated_at: Date = null;
   isLoadingResults = false;
+  current_date = new Date();
 
   constructor(
     private router: Router,
@@ -35,7 +36,7 @@ export class ProductAddComponent implements OnInit {
       'prod_name' : [null, Validators.required],
       'prod_desc' : [null, Validators.required],
       'prod_price' : [null, Validators.required],
-      'updated_at' : [null, Validators.required]
+      'updated_at':this.current_date
     });
   }
 
@@ -43,9 +44,11 @@ export class ProductAddComponent implements OnInit {
     this.isLoadingResults = true;
     this.api.addProduct(form)
       .subscribe(res => {
-          let id = res['_id'];
+          let id = res['id'];
+          console.log(id);
           this.isLoadingResults = false;
-          this.router.navigate(['/product-details', id]);
+          // this.router.navigate(['/products']);
+          this.router.navigate(['/product-details/'+id]);
         }, (err) => {
           console.log(err);
           this.isLoadingResults = false;

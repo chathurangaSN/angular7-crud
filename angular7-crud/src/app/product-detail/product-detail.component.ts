@@ -11,7 +11,7 @@ import { Product } from '../product';
 })
 export class ProductDetailComponent implements OnInit {
   product: Product = {
-    _id: '',
+    id: null,
     prod_name: '',
     prod_desc: '',
     prod_price: null,
@@ -32,12 +32,13 @@ export class ProductDetailComponent implements OnInit {
     this.api.getProduct(id)
       .subscribe(data => {
         this.product = data;
-        console.log(this.product);
+        console.log("product",this.product);
         this.isLoadingResults = false;
       });
   }
 
   deleteProduct(id) {
+    window.alert("Are you sure");
     this.isLoadingResults = true;
     this.api.deleteProduct(id)
       .subscribe(res => {
@@ -48,6 +49,9 @@ export class ProductDetailComponent implements OnInit {
         this.isLoadingResults = false;
       }
       );
+  }
+  editProduct(id){
+    this.router.navigate(['/product-edit',id]);
   }
 
 

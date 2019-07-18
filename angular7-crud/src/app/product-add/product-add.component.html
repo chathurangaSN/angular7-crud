@@ -6,8 +6,13 @@
         <div class="button-row">
           <a mat-flat-button color="primary" [routerLink]="['/products']"><mat-icon>list</mat-icon></a>
         </div>
+
+<div>
+  <small>{{current_date|date}}</small>
+</div>
+
         <mat-card class="example-card">
-          <form [formGroup]="productForm" (ngSubmit)="onFormSubmit(productForm.value)">
+          <form [formGroup]="productForm" (ngSubmit)="onFormSubmit(productForm.value)" autocomplete="off">
             <mat-form-field class="example-full-width">
               <input matInput placeholder="Product Name" formControlName="prod_name"
                      [errorStateMatcher]="matcher">
